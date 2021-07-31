@@ -20,6 +20,7 @@ contract RaptorExchange {
     }
 
     function withdrawStake(uint _amount) public {
+        // Is this line necessary?
         RATInterface.approve(address(this), _amount);
         RATInterface.transferFrom(address(this), msg.sender, _amount);
         stakers[msg.sender] -= _amount;

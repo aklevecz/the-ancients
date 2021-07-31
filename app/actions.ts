@@ -13,20 +13,25 @@ export const setViewState = (view) => (dispatch) =>
     dispatch({ type: SET_VOTE_VIEW, payload: { view } });
 export const setRatBalance = (ratBalance: number) => (dispatch) =>
     dispatch({ type: SET_RAT_BALANCE, payload: { ratBalance } });
+
 export const getRatBalance = () => (dispatch, getState) => {
-    console.log(getState())
     const wallet = getState().wallet;
+    if (!wallet.address) {
+        return null;
+    }
     const contract = initRatContract(wallet);
     contract
         .balanceOf(wallet.address, { from: wallet.address })
         .then((balance) => {
-            console.log(balance)
             dispatch(setRatBalance(parseInt(balance, 10)));
         });
 };
 
 export const initWallet = () => (dispatch) => {
     const provider = getWeb3Provider();
+    if (!provider) {
+        return null;
+    }
    return window.ethereum
         .request({ method: "eth_requestAccounts" })
         .then((accounts: any) => {

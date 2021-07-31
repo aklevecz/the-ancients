@@ -89,6 +89,7 @@
 .rat_balance_token {
     width: 20%;
     margin-top: 10px;
+    max-width: 100px;
 }
 
 @media (min-width:768px) {
